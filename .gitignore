@@ -1,0 +1,49 @@
+# Datasets
+dataset/
+*.tsv
+*.csv
+*.zip
+
+# Outputs & Submissions (keep folder structure via .gitkeep)
+output/*.tsv
+output/*.csv
+output/*.zip
+!output/.gitkeep
+
+# Trained Models & Serialized Artifacts
+models/
+*.pkl
+*.joblib
+
+# Python bytecode & cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Virtual Environments
+.venv/
+venv/
+env/
+ENV/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Environment Variables & Secrets
+.env
+.env.*
+!.env.example
+
+# IDE & Editor Settings
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS Artifacts
+.DS_Store
+Thumbs.db

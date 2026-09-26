@@ -26,10 +26,10 @@ except ImportError:
         s = _nfkc(address)
         return re.sub(r"\s+", " ", s).strip()
 
-    def extract_tokens(text: Optional[str], min_len: int = 1) -> List[str]:
+    def extract_tokens(text: Optional[str]) -> List[str]:
         if not text:
             return []
-        return [tok for tok in re.findall(r"\w+", text.lower()) if len(tok) >= min_len]
+        return [tok for tok in re.findall(r"\w+", text.lower())]
 
     def extract_numeric_tokens(text: Optional[str]) -> List[str]:
         if not text:
@@ -61,7 +61,7 @@ def extract_normalized_numbers(raw_address: Optional[str]) -> List[str]:
 
 def extract_distinctive_address_tokens(raw_address: Optional[str]) -> List[str]:
     """Extract non-numeric, non-stopword address tokens."""
-    tokens = extract_tokens(raw_address, min_len=3)
+    tokens = [t for t in extract_tokens(raw_address) if len(t) >= 3]
     return [t for t in tokens if t not in ADDRESS_STOPWORDS and not t.isdigit()]
 
 

@@ -58,10 +58,10 @@ except ImportError:
             return "France"
         return country.strip() if country else ""
 
-    def extract_tokens(text: Optional[str], min_len: int = 1) -> List[str]:
+    def extract_tokens(text: Optional[str]) -> List[str]:
         if not text:
             return []
-        return [tok for tok in re.findall(r"\w+", text.lower()) if len(tok) >= min_len]
+        return [tok for tok in re.findall(r"\w+", text.lower())]
 
 
 COMMON_STOPWORDS = frozenset({
@@ -87,7 +87,7 @@ def extract_core_name_tokens(raw_name: Optional[str]) -> List[str]:
         return []
     clean_url_name = strip_domains_and_noise(raw_name)
     core = strip_legal_suffixes(clean_url_name)
-    tokens = extract_tokens(core, min_len=2)
+    tokens = [t for t in extract_tokens(core) if len(t) >= 2]
     return [t for t in tokens if t not in COMMON_STOPWORDS]
 
 

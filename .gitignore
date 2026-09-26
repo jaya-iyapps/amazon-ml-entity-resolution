@@ -90,6 +90,7 @@ student_resource/dataset/
 *.pth
 *.onnx
 output/model*
+output/*.json
 models/
 
 # ==============================================================================

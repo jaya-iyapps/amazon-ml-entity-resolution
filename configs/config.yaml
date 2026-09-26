@@ -32,9 +32,10 @@ blocking:
   address_weight: 0.4
 
 matching:
-  # Initial placeholder threshold; must be tuned on validation set
-  threshold: 0.5
+  # Optimal threshold tuned on grouped validation set to maximize macro F0.5
+  threshold: 0.98
   model_type: "logistic_regression"  # e.g., logistic_regression, random_forest, lightgbm
+  model_path: "output/matching_model.json"
   features:
     - name_token_sort_ratio
     - name_jaro_winkler

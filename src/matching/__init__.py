@@ -1,30 +1,54 @@
-"""Machine learning matching module for pairwise features, training, inference, and thresholding.
+"""
+Amazon ML Entity Resolution Challenge 2026 - Matching Module
 
-Owned by: Person 2 (Matching / ML)
+This package contains components for pairwise feature extraction,
+model training, threshold selection, and match prediction.
 """
 
-from src.matching.features import compute_pair_features
-from src.matching.train import train_model
-from src.matching.predict import (
-    predict_scores,
+from .features import FEATURE_NAMES, compute_pair_features, extract_pair_features
+from .predict import (
     format_matching_results,
+    predict_matches,
+    run_prediction_pipeline,
     save_matching_results,
+    stream_candidate_pairs_from_tsv,
+    write_matching_results_tsv,
 )
-from src.matching.threshold import (
+from .threshold import (
     calculate_f_beta,
-    score_single_entity_f05,
     calculate_macro_f05,
+    compute_entity_f05,
+    evaluate_predictions,
+    find_optimal_threshold,
+    score_single_entity_f05,
     select_threshold,
+)
+from .train import (
+    MatchingClassifier,
+    grouped_train_val_split,
+    train_matching_pipeline,
+    train_model,
 )
 
 __all__ = [
+    "FEATURE_NAMES",
+    "extract_pair_features",
     "compute_pair_features",
-    "train_model",
-    "predict_scores",
-    "format_matching_results",
-    "save_matching_results",
+    "compute_entity_f05",
     "calculate_f_beta",
     "score_single_entity_f05",
     "calculate_macro_f05",
+    "evaluate_predictions",
+    "find_optimal_threshold",
     "select_threshold",
+    "MatchingClassifier",
+    "grouped_train_val_split",
+    "train_matching_pipeline",
+    "train_model",
+    "predict_matches",
+    "format_matching_results",
+    "save_matching_results",
+    "run_prediction_pipeline",
+    "stream_candidate_pairs_from_tsv",
+    "write_matching_results_tsv",
 ]

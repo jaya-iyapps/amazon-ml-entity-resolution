@@ -1,49 +1,108 @@
-# Datasets
-dataset/
-*.tsv
-*.csv
-*.zip
+# ==============================================================================
+# Git Ignore Configuration - Amazon ML Entity Resolution Challenge 2026
+# ==============================================================================
 
-# Outputs & Submissions (keep folder structure via .gitkeep)
-output/*.tsv
-output/*.csv
-output/*.zip
-!output/.gitkeep
-
-# Trained Models & Serialized Artifacts
-models/
-*.pkl
-*.joblib
-
-# Python bytecode & cache
+# Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
 *$py.class
-*.so
-.pytest_cache/
-.coverage
-htmlcov/
 
-# Virtual Environments
-.venv/
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual environments
 venv/
+.venv/
 env/
+.env/
 ENV/
+env.bak/
+venv.bak/
 
 # Jupyter Notebook checkpoints
-.ipynb_checkpoints/
+.ipynb_checkpoints
 
-# Environment Variables & Secrets
-.env
-.env.*
-!.env.example
-
-# IDE & Editor Settings
+# IDEs and Editors
 .vscode/
 .idea/
 *.swp
 *.swo
-
-# OS Artifacts
+*~
 .DS_Store
-Thumbs.db
+__MACOSX/
+
+# Environment variables & secrets
+.env
+.env.*
+
+# ==============================================================================
+# Amazon ML Challenge: Datasets & TSV/CSV files
+# ==============================================================================
+# Full dataset directories (CRITICAL: NEVER COMMIT FULL DATA)
+dataset/full/
+student_resource/dataset/
+**/dataset/full/
+**/dataset/train/
+**/dataset/test/
+
+*.csv
+*.parquet
+*.feather
+*.h5
+*.hdf5
+
+# Ignore TSVs by default
+*.tsv
+
+# Explicitly allow tracking of the small development sample TSVs
+!dataset/
+!dataset/sample/
+!dataset/sample/*.tsv
+
+# ==============================================================================
+# Models, Artifacts & Checkpoints
+# ==============================================================================
+*.joblib
+*.pkl
+*.pickle
+*.bin
+*.pt
+*.pth
+*.onnx
+output/model*
+output/*.json
+models/
+
+# ==============================================================================
+# Output submission archives & generated run outputs
+# ==============================================================================
+output/*.tsv
+output/*.csv
+output/*.zip
+*.zip
+*.tar
+*.tar.gz
+
+# Logs & scratch
+*.log
+scratch/

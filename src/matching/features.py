@@ -11,7 +11,7 @@ import math
 import re
 from typing import Any, Dict, List, Optional, Sequence, Set, Tuple
 
-# Attempt to reuse Person 1's preprocessing API when available
+# Reuse Person 1's preprocessing API
 try:
     from src.preprocessing.normalize import (
         clean_address,
@@ -21,59 +21,10 @@ try:
         normalize_country,
         strip_legal_suffixes,
     )
-except ImportError:
-    # Graceful fallback conforming strictly to Person 1's API contract
-    import unicodedata
+except ImportError as e:
+    raise ImportError("Person 1's preprocessing module (src.preprocessing.normalize) is required for matching features.") from e
 
-    def _nfkc(text: Optional[str]) -> str:
-        return unicodedata.normalize("NFKC", text or "").strip().lower()
 
-    def clean_business_name(name: Optional[str]) -> str:
-        s = _nfkc(name)
-        s = re.sub(r"[^\w\s&]", " ", s)  # replace non-alphanumeric except & with space
-        s = re.sub(r"[\s\-_/]+", " ", s)
-        s = s.replace("&", " and ")
-        return s.strip()
-
-    def strip_legal_suffixes(name: Optional[str]) -> str:
-        s = clean_business_name(name)
-        suffixes = (
-            " pvt ltd", " private limited", " limited", " ltd",
-            " inc", " incorporated", " llc", " llp", " corp",
-            " corporation", " co", " company", " gmbh", " sarl", " sas", " sa",
-        )
-        changed = True
-        while changed:
-            changed = False
-            for suf in suffixes:
-                if s.endswith(suf):
-                    s = s[: -len(suf)].strip()
-                    changed = True
-        return s
-
-    def clean_address(address: Optional[str]) -> str:
-        s = _nfkc(address)
-        return re.sub(r"\s+", " ", s).strip()
-
-    def normalize_country(country: Optional[str]) -> str:
-        s = (country or "").strip().lower()
-        if s in ("us", "usa", "united states", "united states of america"):
-            return "US"
-        if s in ("india", "ind"):
-            return "India"
-        if s in ("france", "fra", "fr"):
-            return "France"
-        return country.strip() if country else ""
-
-    def extract_tokens(text: Optional[str], min_len: int = 1) -> List[str]:
-        if not text:
-            return []
-        return [tok for tok in re.findall(r"\w+", text.lower()) if len(tok) >= min_len]
-
-    def extract_numeric_tokens(text: Optional[str]) -> List[str]:
-        if not text:
-            return []
-        return re.findall(r"\b\d+\b", text)
 
 
 def strip_all_suffixes(text: Optional[str]) -> str:
